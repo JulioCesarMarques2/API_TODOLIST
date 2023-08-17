@@ -14,10 +14,14 @@ public class ToDO {
     @Column(nullable = false)
     private StatusEnum status = StatusEnum.NOT_STARTED;
 
+    public ToDO() {
+    }
+
     public ToDO(String title, String description, StatusEnum status) {
         this.title = title;
         this.description = description;
         this.status = status;
+
     }
 
     public Integer getId() {
