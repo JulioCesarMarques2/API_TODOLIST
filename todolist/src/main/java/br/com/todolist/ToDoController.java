@@ -35,5 +35,45 @@ public class ToDoController {
         } else {
             return ResponseEntity.notFound().build();
         }
+
+    }
+    @PutMapping("/{todoid}/start_task")
+    public ResponseEntity<ToDO> starttask(@PathVariable Integer todoid) {
+        ToDO todoDatabase = this.todorepo.findById(todoid).get();
+        if (todoDatabase != null) {
+            todoDatabase.setStatus(StatusEnum.IN_PROGRESS);
+            this.todorepo.save(todoDatabase);
+            return ResponseEntity.ok(todoDatabase);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @PutMapping("/{todoid}/end_task")
+    public ResponseEntity<ToDO> endtask(@PathVariable Integer todoid) {
+        ToDO todoDatabase = this.todorepo.findById(todoid).get();
+        if (todoDatabase != null) {
+            todoDatabase.setStatus(StatusEnum.FINISHED);
+            this.todorepo.save(todoDatabase);
+            return ResponseEntity.ok(todoDatabase);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @PutMapping("/{todoid}/update")
+    public ResponseEntity<ToDO> update(@PathVariable Integer todoid, @RequestBody ToDO todo) {
+        ToDO todoDatabase = this.todorepo.findById(todoid).get();
+        if (todoDatabase != null) {
+            todoDatabase.setTitle(todo.getTitle());
+            todoDatabase.setDescription(todo.getDescription());
+            this.todorepo.save(todoDatabase);
+            return ResponseEntity.ok(todoDatabase);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+
     }
 }
+
+
+
+
